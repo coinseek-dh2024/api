@@ -16,7 +16,9 @@ export async function auth(req: Request, res: Response, next: NextFunction) {
     return res.status(401).json({ message: 'Invalid token' });
   }
 
+  // @ts-ignore
   req.userId = decToken.uid;
+
 
   const user = await prisma.user.findUnique({
     where: { id: decToken.uid },
@@ -26,6 +28,28 @@ export async function auth(req: Request, res: Response, next: NextFunction) {
       data: { id: decToken.uid },
     });
   }
+
+  next();
+}
+
+export async function authFake(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  const userId = 'testuser123';
+
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+  });
+  if (!user) {
+    await prisma.user.create({
+      data: { id: userId },
+    });
+  }
+
+  // @ts-ignore
+  req.userId = userId;
 
   next();
 }
