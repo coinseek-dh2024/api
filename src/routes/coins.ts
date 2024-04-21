@@ -6,6 +6,7 @@ export const coinRouter = Router();
 
 coinRouter.use(auth);
 
+// Get all available coins for user
 coinRouter.get('/', async (req: Request, res: Response) => {
   console.log('Getting coins');
 

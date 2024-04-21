@@ -6,6 +6,7 @@ export const userRouter = Router();
 
 userRouter.use(auth);
 
+// Get logged in user
 userRouter.get('/', async (req: Request, res: Response) => {
   console.log('Getting user data');
 
@@ -24,6 +25,7 @@ userRouter.get('/', async (req: Request, res: Response) => {
   res.json(user);
 });
 
+// Update user
 userRouter.patch('/', async (req: Request, res: Response) => {
   console.log('Updating user data', req.body);
 

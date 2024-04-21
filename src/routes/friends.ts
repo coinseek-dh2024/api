@@ -6,6 +6,7 @@ export const friendRouter = Router();
 
 friendRouter.use(auth);
 
+// Send a friend request to user
 friendRouter.post('/request', async (req: Request, res: Response) => {
   const email: string = req.body.email;
   if (!email) {
@@ -31,6 +32,7 @@ friendRouter.post('/request', async (req: Request, res: Response) => {
   });
 });
 
+// Get friend requests
 friendRouter.get('/requests', async (req: Request, res: Response) => {
   const user = await prisma.user.findUnique({
     where: { id: req.userId },
@@ -52,6 +54,7 @@ friendRouter.get('/requests', async (req: Request, res: Response) => {
   res.json(user.incomingFriendRequests);
 });
 
+// Accept a friend request
 friendRouter.post('/accept', async (req: Request, res: Response) => {
   const email: string = req.body.email;
   if (!email) {
@@ -80,6 +83,7 @@ friendRouter.post('/accept', async (req: Request, res: Response) => {
   });
 });
 
+// Get friends
 friendRouter.get('/', async (req: Request, res: Response) => {
   const user = await prisma.user.findUnique({
     where: { id: req.userId },
@@ -88,6 +92,7 @@ friendRouter.get('/', async (req: Request, res: Response) => {
         select: {
           name: true,
           balance: true,
+          email: true,
         },
         orderBy: { balance: 'desc' },
       },

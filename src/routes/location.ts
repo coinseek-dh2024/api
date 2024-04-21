@@ -9,6 +9,7 @@ export const locationRouter = Router();
 
 locationRouter.use(auth);
 
+// Report current location
 locationRouter.post('/', async (req: Request, res: Response) => {
   console.log('Reporting location', req.body);
 
