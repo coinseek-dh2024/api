@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 dependencies:
   '@googlemaps/google-maps-services-js':
     specifier: ^3.4.0
@@ -11,6 +7,9 @@ dependencies:
   '@prisma/client':
     specifier: 5.7.0
     version: 5.7.0(prisma@5.12.1)
+  core-js:
+    specifier: ^3.37.0
+    version: 3.37.0
   dotenv:
     specifier: ^16.4.5
     version: 16.4.5
@@ -865,6 +864,11 @@ packages:
   /cookie@0.6.0:
     resolution: {integrity: sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==}
     engines: {node: '>= 0.6'}
+    dev: false
+
+  /core-js@3.37.0:
+    resolution: {integrity: sha512-fu5vHevQ8ZG4og+LXug8ulUtVxjOcEYvifJr7L5Bfq9GOztVqsKd9/59hUk2ZSbCrS3BqUr3EpaYGIYzq7g3Ug==}
+    requiresBuild: true
     dev: false
 
   /crypto-js@4.2.0:
@@ -2315,3 +2319,7 @@ packages:
     requiresBuild: true
     dev: false
     optional: true
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
