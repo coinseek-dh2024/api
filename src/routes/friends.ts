@@ -39,7 +39,9 @@ friendRouter.get('/requests', async (req: Request, res: Response) => {
         select: {
           email: true,
           name: true,
+          balance: true,
         },
+        orderBy: { balance: 'desc' },
       },
     },
   });
