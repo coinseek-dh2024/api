@@ -1,12 +1,17 @@
 import { Request, Response, Router } from 'express';
 import { prisma } from '../prisma';
 import { getDistance } from 'geolib';
+import { auth } from '../auth';
 
 const pickupRadius = 40;
 
 export const locationRouter = Router();
 
+locationRouter.use(auth);
+
 locationRouter.post('/', async (req: Request, res: Response) => {
+  console.log('Reporting location', req.body);
+
   const user = await prisma.user.findUnique({
     // @ts-ignore
     where: { id: req.userId },
@@ -25,11 +30,11 @@ locationRouter.post('/', async (req: Request, res: Response) => {
     return;
   }
 
-  const { lat, lng } = req.body;
-  if (lat == undefined || lng == undefined) {
+  if (!req.body) {
     res.status(400).json({ message: 'Location is missing' });
     return;
   }
+  const [lat, lng] = req.body.location;
 
   const pickedUp = user.coins.filter((c) => getDistance(
       { lat: c.location[0], lng: c.location[1] },

@@ -35,7 +35,7 @@ export function distance(lat1: number, lon1: number, lat2: number, lon2: number)
     Math.sin(dLon / 2) * Math.sin(dLon / 2)
   ;
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-   // Distance in m
+  // Distance in m
   return R * c / 1000;
 }
 

@@ -1,6 +1,14 @@
 import admin from 'firebase-admin';
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { prisma } from './prisma';
+
+declare global {
+  namespace Express {
+    interface Request {
+      userId: string;
+    }
+  }
+}
 
 export async function auth(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.header('Authorization');
@@ -11,14 +19,14 @@ export async function auth(req: Request, res: Response, next: NextFunction) {
   }
   const token = authHeader.split('Bearer ')[1];
 
-  const decToken = await admin.auth().verifyIdToken(token);
+  const decToken = await admin.auth().verifyIdToken(token).catch(() => {
+    console.error('Failed to verify token');
+  });
   if (!decToken) {
     return res.status(401).json({ message: 'Invalid token' });
   }
 
-  // @ts-ignore
   req.userId = decToken.uid;
-
 
   const user = await prisma.user.findUnique({
     where: { id: decToken.uid },

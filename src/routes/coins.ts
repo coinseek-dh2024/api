@@ -1,9 +1,14 @@
 import { Request, Response, Router } from 'express';
 import { prisma } from '../prisma';
+import { auth } from '../auth';
 
 export const coinRouter = Router();
 
+coinRouter.use(auth);
+
 coinRouter.get('/', async (req: Request, res: Response) => {
+  console.log('Getting coins');
+
   const coins = await prisma.coin.findMany({
     // @ts-ignore
     where: { userId: req.userId },
@@ -17,3 +22,4 @@ coinRouter.get('/', async (req: Request, res: Response) => {
 
   res.json(coins);
 });
+
