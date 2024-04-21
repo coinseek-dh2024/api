@@ -9,10 +9,17 @@ datasource db {
 
 model User {
   id          String  @id
-  name        String?
+  email       String  @unique
+  name        String  @default("Coin Seeker")
   balance     Int     @default(0)
   centerPoint Float[]
   coins       Coin[]
+
+  friends  User[] @relation(name: "friends")
+  friendOf User[] @relation(name: "friends")
+
+  incomingFriendRequests User[] @relation(name: "friendRequests")
+  outgoingFriendRequests User[] @relation(name: "friendRequests")
 }
 
 enum CoinType {

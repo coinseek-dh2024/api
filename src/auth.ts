@@ -33,31 +33,12 @@ export async function auth(req: Request, res: Response, next: NextFunction) {
   });
   if (!user) {
     await prisma.user.create({
-      data: { id: decToken.uid },
+      data: {
+        id: decToken.uid,
+        email: decToken.email!,
+      },
     });
   }
-
-  next();
-}
-
-export async function authFake(
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) {
-  const userId = 'testuser123';
-
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-  });
-  if (!user) {
-    await prisma.user.create({
-      data: { id: userId },
-    });
-  }
-
-  // @ts-ignore
-  req.userId = userId;
 
   next();
 }

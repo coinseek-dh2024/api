@@ -16,6 +16,7 @@ userRouter.get('/', async (req: Request, res: Response) => {
     },
     select: {
       name: true,
+      balance: true,
     },
   });
 
@@ -30,9 +31,11 @@ userRouter.patch('/', async (req: Request, res: Response) => {
     where: { id: req.userId },
     data: {
       name: req.body.name,
+      centerPoint: req.body.centerPoint,
     },
     select: {
       name: true,
+      centerPoint: true,
     },
   });
 

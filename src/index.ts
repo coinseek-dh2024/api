@@ -7,6 +7,7 @@ import { locationRouter } from './routes/location';
 import { userRouter } from './routes/user';
 import cron from 'node-cron';
 import { spawnCoins } from './spawn';
+import { friendRouter } from './routes/friends';
 
 dotenv.config();
 
@@ -41,6 +42,7 @@ app.post('/coins', async (req: Request, res: Response) => {
 app.use('/coins', coinRouter);
 app.use('/location', locationRouter);
 app.use('/user', userRouter);
+app.use('/friends', friendRouter);
 
 app.get('/', (req, res) => {
   res.send('healthy');

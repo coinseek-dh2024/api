@@ -58,5 +58,5 @@ locationRouter.post('/', async (req: Request, res: Response) => {
     where: { id: { in: pickedUp.map((p) => p.id) } },
   });
 
-  res.json(pickedUp);
+  res.json({ coins: pickedUp });
 });
