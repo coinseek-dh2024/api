@@ -35,12 +35,11 @@ friendRouter.get('/requests', async (req: Request, res: Response) => {
   const user = await prisma.user.findUnique({
     where: { id: req.userId },
     include: {
-      friends: {
+      incomingFriendRequests: {
         select: {
           email: true,
-          balance: true,
+          name: true,
         },
-        orderBy: { balance: 'desc' },
       },
     },
   });
@@ -48,7 +47,7 @@ friendRouter.get('/requests', async (req: Request, res: Response) => {
     return res.status(404).json({ message: 'User not found' });
   }
 
-  res.json(user.friends);
+  res.json(user.incomingFriendRequests);
 });
 
 friendRouter.post('/accept', async (req: Request, res: Response) => {
@@ -77,13 +76,24 @@ friendRouter.post('/accept', async (req: Request, res: Response) => {
       friendOf: { connect: { email } },
     },
   });
+});
 
-  await prisma.user.update({
-    where: {
-      email: email,
-    },
-    data: {
-      friends: { connect: { id: req.userId } },
+friendRouter.get('/', async (req: Request, res: Response) => {
+  const user = await prisma.user.findUnique({
+    where: { id: req.userId },
+    include: {
+      friends: {
+        select: {
+          name: true,
+          balance: true,
+        },
+        orderBy: { balance: 'desc' },
+      },
     },
   });
+  if (!user) {
+    return res.status(404).json({ message: 'User not found' });
+  }
+
+  res.json(user.friends);
 });
