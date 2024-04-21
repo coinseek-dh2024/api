@@ -16,6 +16,7 @@ userRouter.get('/', async (req: Request, res: Response) => {
     },
     select: {
       name: true,
+      email: true,
       balance: true,
     },
   });
